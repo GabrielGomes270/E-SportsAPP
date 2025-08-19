@@ -1,4 +1,4 @@
-﻿namespace E_SportsAPP.DTOs
+﻿namespace E_SportsAPP.DTOs.Gear
 {
     public class GearDetailDTO
     {

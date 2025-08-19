@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using E_SportsAPP.DTOs;
+using E_SportsAPP.DTOs.Gear;
+using E_SportsAPP.DTOs.Player;
 using E_SportsAPP.Models;
 
 namespace E_SportsAPP.AutoMapper

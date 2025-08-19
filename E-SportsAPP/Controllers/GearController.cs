@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using E_SportsAPP.DTOs;
+using E_SportsAPP.DTOs.Gear;
 using E_SportsAPP.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

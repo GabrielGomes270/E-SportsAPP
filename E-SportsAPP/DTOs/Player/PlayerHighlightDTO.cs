@@ -1,4 +1,4 @@
-﻿namespace E_SportsAPP.DTOs
+﻿namespace E_SportsAPP.DTOs.Player
 {
     public class PlayerHighlightDTO
     {

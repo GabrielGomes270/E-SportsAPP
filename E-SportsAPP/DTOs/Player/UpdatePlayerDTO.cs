@@ -1,8 +1,7 @@
-﻿namespace E_SportsAPP.DTOs
+﻿namespace E_SportsAPP.DTOs.Player
 {
-    public class PlayerResponseDTO
+    public class UpdatePlayerDTO
     {
-        public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Bio { get; set; } = string.Empty;
         public string SocialLinks { get; set; } = string.Empty;

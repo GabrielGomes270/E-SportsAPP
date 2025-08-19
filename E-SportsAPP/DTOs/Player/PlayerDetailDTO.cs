@@ -1,4 +1,6 @@
-﻿namespace E_SportsAPP.DTOs
+﻿using E_SportsAPP.DTOs.Gear;
+
+namespace E_SportsAPP.DTOs.Player
 {
     public class PlayerDetailDTO : PlayerResponseDTO
     {
