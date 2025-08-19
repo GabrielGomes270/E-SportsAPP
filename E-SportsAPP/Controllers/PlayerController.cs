@@ -21,14 +21,25 @@ namespace E_SportsAPP.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllPlayers()
+        public async Task<ActionResult<IEnumerable<PlayerResponseDTO>>> GetAllPlayers()
         {
             var players = await _playerRepository.GetAllPlayersAsync();
-            return Ok(players);
+            return Ok(_mapper.Map<IEnumerable<PlayerResponseDTO>>(players));
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<PlayerDetailDTO>> GetPlayerById(int id)
+        {
+            var player = await _playerRepository.GetPlayerByIdAsync(id);
+            if (player == null)
+            {
+                return NotFound();
+            }
+            return Ok(_mapper.Map<PlayerDetailDTO>(player));
         }
 
         [HttpGet("GetByName/{name}")]
-        public async Task<IActionResult> GetPlayerByName(string name)
+        public async Task<ActionResult<PlayerResponseDTO>> GetPlayerByName(string name)
         {
             var player = await _playerRepository.GetPlayerByNameAsync(name);
             if (player == null)
@@ -36,19 +47,9 @@ namespace E_SportsAPP.Controllers
                 return NotFound();
             }
 
-             return Ok(player);
+             return Ok(_mapper.Map<PlayerResponseDTO>(player));
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetPlayerById(int id)
-        {
-            var player = await _playerRepository.GetPlayerByIdAsync(id);
-            if (player == null)
-            {
-                return NotFound();
-            }
-            return Ok(player);
-        }
 
         [HttpPost]
         public async Task<ActionResult<Player>> AddPlayer(Player player)
