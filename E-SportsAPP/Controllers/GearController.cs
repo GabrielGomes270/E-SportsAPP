@@ -1,4 +1,6 @@
-﻿using E_SportsAPP.Repositories;
+﻿using AutoMapper;
+using E_SportsAPP.DTOs;
+using E_SportsAPP.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,17 +11,30 @@ namespace E_SportsAPP.Controllers
     public class GearController : ControllerBase
     {
         private readonly IGearRepository _gearRepository;
+        private readonly IMapper _mapper;
 
-        public GearController(IGearRepository gearRepository)
+        public GearController(IGearRepository gearRepository, IMapper mapper)
         {
             _gearRepository = gearRepository;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetGearsByPlayerId(int playerId)
+        public async Task<ActionResult<GearResponseDTO>> GetGearsByPlayerId(int playerId)
         {
             var gears = await _gearRepository.GetGearsByPlayerIdAsync(playerId);
-            return Ok(gears);
+            return Ok(_mapper.Map<GearResponseDTO>(gears));
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<GearDetailDTO>> GetGearById(int id)
+        {
+            var gear = await _gearRepository.GetGearByIdAsync(id);
+            if (gear == null)
+            {
+                return NotFound();
+            }
+            return Ok(_mapper.Map<GearDetailDTO>(gear));
         }
     }
 }
