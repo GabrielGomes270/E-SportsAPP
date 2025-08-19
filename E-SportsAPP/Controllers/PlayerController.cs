@@ -21,14 +21,14 @@ namespace E_SportsAPP.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PlayerResponseDTO>>> GetAllPlayers()
+        public async Task<IActionResult> GetAllPlayers()
         {
             var players = await _playerRepository.GetAllPlayersAsync();
-            return Ok(_mapper.Map<IEnumerable<PlayerResponseDTO>>(players));
+            return Ok(players);
         }
 
         [HttpGet("GetByName/{name}")]
-        public async Task<ActionResult<PlayerResponseDTO>> GetPlayerByName(string name)
+        public async Task<IActionResult> GetPlayerByName(string name)
         {
             var player = await _playerRepository.GetPlayerByNameAsync(name);
             if (player == null)
@@ -36,31 +36,29 @@ namespace E_SportsAPP.Controllers
                 return NotFound();
             }
 
-             return Ok(_mapper.Map<PlayerResponseDTO>(player));
+             return Ok(player);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<PlayerDetailDTO>> GetPlayerById(int id)
+        public async Task<IActionResult> GetPlayerById(int id)
         {
             var player = await _playerRepository.GetPlayerByIdAsync(id);
             if (player == null)
             {
                 return NotFound();
             }
-            return Ok(_mapper.Map<PlayerDetailDTO>(player));
+            return Ok(player);
         }
 
         [HttpPost]
-        public async Task<ActionResult<PlayerResponseDTO>> AddPlayer([FromBody] Player player)
+        public async Task<ActionResult<Player>> AddPlayer(Player player)
         {
             if (player == null)
             {
                 return BadRequest("Player não pode ser nulo.");
             }
             await _playerRepository.AddPlayerAsync(player);
-
-            var playerDto = _mapper.Map<PlayerResponseDTO>(player);
-            return CreatedAtAction(nameof(GetPlayerById), new { id = player.Id }, playerDto);
+            return CreatedAtAction(nameof(GetPlayerById), new { id = player.Id }, player);
         }
 
         [HttpPut("{id}")]
