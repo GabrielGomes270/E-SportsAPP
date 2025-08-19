@@ -13,6 +13,6 @@
         public int Visualizations { get; set; }
 
 
-        public ICollection<Gear> Gears { get; set; } 
+        public ICollection<Gear> Gears { get; set; } = new List<Gear>();
     }
 }
