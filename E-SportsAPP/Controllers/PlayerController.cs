@@ -52,30 +52,33 @@ namespace E_SportsAPP.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<Player>> AddPlayer(Player player)
+        public async Task<ActionResult<PlayerResponseDTO>> CreatePlayer([FromBody] CreatePlayerDTO createPlayer)
         {
-            if (player == null)
+            if (createPlayer == null)
             {
                 return BadRequest("Player não pode ser nulo.");
             }
+
+            var player = _mapper.Map<Player>(createPlayer);
             await _playerRepository.AddPlayerAsync(player);
-            return CreatedAtAction(nameof(GetPlayerById), new { id = player.Id }, player);
+
+            var response = _mapper.Map<PlayerResponseDTO>(player);
+            return CreatedAtAction(nameof(GetPlayerById), new { id = player.Id }, response);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePlayer(int id, Player player)
+        public async Task<ActionResult<PlayerResponseDTO>> UpdatePlayer(int id, [FromBody] UpdatePlayerDTO updatePlayer)
         {
-            if (id != player.Id)
-            {
-                return BadRequest("ID do jogador não corresponde.");
-            }
             var existingPlayer = await _playerRepository.GetPlayerByIdAsync(id);
             if (existingPlayer == null)
             {
                 return NotFound();
             }
-            await _playerRepository.UpdatePlayerAsync(id, player);
-            return NoContent();
+
+            _mapper.Map(updatePlayer, existingPlayer);
+
+            await _playerRepository.UpdatePlayerAsync(id, existingPlayer);
+            return Ok(_mapper.Map<PlayerResponseDTO>(existingPlayer));
         }
 
         [HttpDelete("{id}")]
