@@ -18,20 +18,10 @@ namespace E_SportsAPP.Repositories
         {
             return await _context.Players.ToListAsync();
         }
-        public async Task<IEnumerable<Player>> GetPlayersByNameAsync(string name, bool exactMatch = true)
-        {
-            if (exactMatch)
-            {
+        public async Task<Player?> GetPlayerByNameAsync(string name)
+        { 
                 return await _context.Players
-                    .Where(p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
-                    .ToListAsync(); 
-            }
-            else
-            {
-                return await _context.Players
-                    .Where(p => p.Name.ToLower().Contains(name.ToLower()))
-                    .ToListAsync();
-            }
+                .FirstOrDefaultAsync(p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
         }
         public async Task<Player?> GetPlayerByIdAsync(int id)
         {

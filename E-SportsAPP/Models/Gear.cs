@@ -11,7 +11,7 @@
         public string ImageUrl { get; set; } = string.Empty;
 
         public int PlayerId { get; set; }
-        public Player Player { get; set; } 
+        public Player? Player { get; set; } 
 
     }
 }
