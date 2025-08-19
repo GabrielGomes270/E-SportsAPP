@@ -8,9 +8,15 @@ namespace E_SportsAPP.AutoMapper
     {
         public PlayerProfile()
         {
-            CreateMap<Player, PlayerHighlightDTO>()
-                .ForMember(dest => dest.SocialLinks, opt => opt.MapFrom(src => src.SocialLinks));
+            CreateMap<Player, PlayerHighlightDTO>();
 
+            CreateMap<Player, PlayerResponseDTO>();
+
+            CreateMap<Player, PlayerDetailDTO>();
+
+            CreateMap<Gear, GearResponseDTO>();
+
+            CreateMap<Gear, GearDetailDTO>();
         }
     }
 }
