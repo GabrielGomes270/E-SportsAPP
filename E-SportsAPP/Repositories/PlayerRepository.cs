@@ -48,5 +48,11 @@ namespace E_SportsAPP.Repositories
             }
         }
 
+        public async Task<IEnumerable<Player>> GetHighlightedPlayersByAsync()
+        {
+            return await _context.Players
+                .Where(p => p.IsHighlighted)
+                .ToListAsync();
+        }
     }
 }
