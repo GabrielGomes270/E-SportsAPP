@@ -27,7 +27,7 @@ namespace E_SportsAPP.Controllers
             return Ok(_mapper.Map<IEnumerable<PlayerResponseDTO>>(players));
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("id/{id}")]
         public async Task<ActionResult<PlayerDetailDTO>> GetPlayerById(int id)
         {
             var player = await _playerRepository.GetPlayerByIdAsync(id);
@@ -38,7 +38,7 @@ namespace E_SportsAPP.Controllers
             return Ok(_mapper.Map<PlayerDetailDTO>(player));
         }
 
-        [HttpGet("GetByName/{name}")]
+        [HttpGet("name/{name}")]
         public async Task<ActionResult<PlayerResponseDTO>> GetPlayerByName(string name)
         {
             var player = await _playerRepository.GetPlayerByNameAsync(name);

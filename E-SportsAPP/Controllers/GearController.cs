@@ -19,7 +19,7 @@ namespace E_SportsAPP.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet("GearsByPlayer")]
         public async Task<ActionResult<GearResponseDTO>> GetGearsByPlayerId(int playerId)
         {
             var gears = await _gearRepository.GetGearsByPlayerIdAsync(playerId);
