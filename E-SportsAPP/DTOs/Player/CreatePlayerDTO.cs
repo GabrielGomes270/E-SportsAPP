@@ -4,7 +4,7 @@
     {
         public string Name { get; set; } = string.Empty;
         public string Bio { get; set; } = string.Empty;
-        public string SocialLinks { get; set; } = string.Empty;
+        public List<string> SocialLinks { get; set; } = new List<string>();
         public string Role { get; set; } = string.Empty;
         public int Championships { get; set; }
         public int Followers { get; set; }
