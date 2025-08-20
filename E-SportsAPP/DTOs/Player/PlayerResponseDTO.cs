@@ -1,4 +1,6 @@
-﻿namespace E_SportsAPP.DTOs.Player
+﻿using E_SportsAPP.DTOs.Gear;
+
+namespace E_SportsAPP.DTOs.Player
 {
     public class PlayerResponseDTO
     {
@@ -11,5 +13,8 @@
         public int Followers { get; set; }
         public int Profit { get; set; }
         public int Visualizations { get; set; }
+        public string ImageUrl { get; set; } = string.Empty;
+
+        public IEnumerable<GearResponseDTO>? Gear { get; set; }
     }
 }

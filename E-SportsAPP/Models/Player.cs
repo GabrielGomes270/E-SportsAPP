@@ -11,7 +11,8 @@
         public int Followers { get; set; }
         public int Profit { get; set; } 
         public int Visualizations { get; set; }
-        public bool IsHighlighted { get; set; } = false; 
+        public bool IsHighlighted { get; set; } = false;
+        public string ImageUrl { get; set; } = string.Empty;
 
 
         public ICollection<Gear> Gears { get; set; } = new List<Gear>();
