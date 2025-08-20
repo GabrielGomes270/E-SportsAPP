@@ -11,5 +11,7 @@ namespace E_SportsAPP.Repositories
         Task UpdateGearAsync(Gear gear);
         Task DeleteGearAsync(int id);
         Task<Gear?> GetGearByNameAsync(string name);
+
+        Task UpdateGearImageAsync(int id, string imageUrl);
     }
 }
