@@ -53,5 +53,13 @@ namespace E_SportsAPP.Repositories
             }
         }
 
+        public async Task UpdateGearImageAsync(int GearId, string imageUrl)
+        {
+            var gear = await _context.Gears.FindAsync(GearId);
+            if (gear == null) return;
+
+            gear.ImageUrl = imageUrl;
+            await _context.SaveChangesAsync();
+        }
     }
 }

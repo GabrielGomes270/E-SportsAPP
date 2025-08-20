@@ -113,5 +113,39 @@ namespace E_SportsAPP.Controllers
 
             return Ok(_mapper.Map<IEnumerable<PlayerHighlightDTO>>(highlights));
         }
+
+        [HttpPost("{id}/image")]
+        public async Task<IActionResult> UploadPlayerImage(int id, IFormFile file)
+        {
+            var player = await _playerRepository.GetPlayerByIdAsync(id);
+            if (player == null)
+            {
+                return NotFound("Jogador não encontrado.");
+            }
+
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("Arquivo inválido.");
+            }
+
+            var folderPath = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot", "images", "players");
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+            var filePath = Path.Combine(folderPath, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            var imageUrl = $"/images/players/{fileName}";
+
+            await _playerRepository.UpdatePlayerImageAsync(id, imageUrl);
+            return Ok(new { message = "Imagem salva com sucesso!", imageUrl });
+        }
     }
 }

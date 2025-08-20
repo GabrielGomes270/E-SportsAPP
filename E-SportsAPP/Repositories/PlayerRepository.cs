@@ -19,9 +19,9 @@ namespace E_SportsAPP.Repositories
             return await _context.Players.ToListAsync();
         }
         public async Task<Player?> GetPlayerByNameAsync(string name)
-        { 
-                return await _context.Players
-                .FirstOrDefaultAsync(p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+        {
+            return await _context.Players
+            .FirstOrDefaultAsync(p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
         }
         public async Task<Player?> GetPlayerByIdAsync(int id)
         {
@@ -29,8 +29,8 @@ namespace E_SportsAPP.Repositories
         }
         public async Task AddPlayerAsync(Player player)
         {
-           await _context.Players.AddAsync(player);
-           await _context.SaveChangesAsync();
+            await _context.Players.AddAsync(player);
+            await _context.SaveChangesAsync();
         }
 
         public async Task UpdatePlayerAsync(int id, Player player)
@@ -53,6 +53,15 @@ namespace E_SportsAPP.Repositories
             return await _context.Players
                 .Where(p => p.IsHighlighted)
                 .ToListAsync();
+        }
+
+        public async Task UpdatePlayerImageAsync(int playerId, string imageUrl)
+        {
+            var player = await _context.Players.FindAsync(playerId);
+            if (player == null) return;
+            
+            player.ImageUrl = imageUrl;
+            await _context.SaveChangesAsync();
         }
     }
 }

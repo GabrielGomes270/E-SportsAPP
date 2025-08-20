@@ -36,5 +36,39 @@ namespace E_SportsAPP.Controllers
             }
             return Ok(_mapper.Map<GearDetailDTO>(gear));
         }
+
+        [HttpPost("{id}/image")]
+        public async Task<IActionResult> UploadGearImage(int id, IFormFile file)
+        {
+            var gear= await _gearRepository.GetGearByIdAsync(id);
+            if (gear == null)
+            {
+                return NotFound("Gear não encontrado.");
+            }
+
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("Arquivo inválido.");
+            }
+
+            var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "gears");
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+            var filePath = Path.Combine(folderPath, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            var imageUrl = $"/images/gears/{fileName}";
+
+            await _gearRepository.UpdateGearImageAsync(id, imageUrl);
+            return Ok(new { message = "Imagem salva com sucesso!", imageUrl });
+        }
     }
 }

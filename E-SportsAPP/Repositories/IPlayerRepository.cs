@@ -11,5 +11,7 @@ namespace E_SportsAPP.Repositories
         Task AddPlayerAsync(Player player);
         Task UpdatePlayerAsync(int id, Player player);
         Task DeletePlayerAsync(int id);
+
+        Task UpdatePlayerImageAsync(int id, string imageUrl);
     }
 }
