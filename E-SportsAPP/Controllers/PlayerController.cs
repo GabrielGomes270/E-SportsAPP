@@ -97,8 +97,21 @@ namespace E_SportsAPP.Controllers
         public async Task<ActionResult<IEnumerable<PlayerHighlightDTO>>> GetPlayerHighlights()
         {
             var players = await _playerRepository.GetAllPlayersAsync();
-            var highlights = _mapper.Map<IEnumerable<PlayerHighlightDTO>>(players);
-            return Ok(highlights);
+
+            var roleOrder = new Dictionary<string, int>
+            {
+                { "Top-Laner", 1 },
+                { "Jungle", 2 },
+                { "Mid-Laner", 3 },
+                { "Bot-Laner", 4 },
+                { "Support", 5 }
+            };
+
+            var highlights = players
+                .OrderBy(p => roleOrder.ContainsKey(p.Role) ? roleOrder[p.Role] : int.MaxValue)
+                .ToList();
+
+            return Ok(_mapper.Map<IEnumerable<PlayerHighlightDTO>>(highlights));
         }
     }
 }
