@@ -1,4 +1,5 @@
 ﻿using E_SportsAPP.DTOs.Gear;
+using E_SportsAPP.Extensions;
 
 namespace E_SportsAPP.DTOs.Player
 {
@@ -9,10 +10,19 @@ namespace E_SportsAPP.DTOs.Player
         public string Bio { get; set; } = string.Empty;
         public string SocialLinks { get; set; } = string.Empty;
         public string Role { get; set; } = string.Empty;
+
         public int Championships { get; set; }
-        public int Followers { get; set; }
-        public int Profit { get; set; }
-        public int Visualizations { get; set; }
+        public string ChampionshipsFormatted => Championships.ToReadableFormat();
+
+        public long Followers { get; set; }
+        public string FollowersFormatted => Followers.ToReadableFormat();
+
+        public decimal Profit { get; set; }
+        public string ProfitFormatted => Profit.ToReadableFormat();
+
+        public long Visualizations { get; set; }
+        public string VisualizationsFormatted => Visualizations.ToReadableFormat();
+
         public string ImageUrl { get; set; } = string.Empty;
 
         public IEnumerable<GearResponseDTO>? Gear { get; set; }
