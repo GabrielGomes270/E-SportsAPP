@@ -6,5 +6,6 @@
         public string Role { get; set; } = string.Empty;
         public string SocialLinks { get; set; } = string.Empty;
         public string ImageUrl { get; set; } = string.Empty;
+        public bool IsHighlighted { get; set; } = false;
     }
 }

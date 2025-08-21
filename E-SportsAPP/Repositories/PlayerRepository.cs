@@ -63,5 +63,12 @@ namespace E_SportsAPP.Repositories
             player.ImageUrl = imageUrl;
             await _context.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<Player>> GetPlayersByRoleAsync(string role)
+        {
+            return await _context.Players
+                .Where(p => p.Role.Equals(role, StringComparison.OrdinalIgnoreCase))
+                .ToListAsync();
+        }
     }
 }

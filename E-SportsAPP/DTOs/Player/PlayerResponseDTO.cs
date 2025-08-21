@@ -25,6 +25,8 @@ namespace E_SportsAPP.DTOs.Player
 
         public string ImageUrl { get; set; } = string.Empty;
 
+        public bool IsHighlighted { get; set; } = false;
+
         public IEnumerable<GearResponseDTO>? Gear { get; set; }
     }
 }

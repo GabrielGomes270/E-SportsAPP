@@ -108,6 +108,7 @@ namespace E_SportsAPP.Controllers
             };
 
             var highlights = players
+                .Where(p => p.IsHighlighted)
                 .OrderBy(p => roleOrder.ContainsKey(p.Role) ? roleOrder[p.Role] : int.MaxValue)
                 .ToList();
 
@@ -146,6 +147,35 @@ namespace E_SportsAPP.Controllers
 
             await _playerRepository.UpdatePlayerImageAsync(id, imageUrl);
             return Ok(new { message = "Imagem salva com sucesso!", imageUrl });
+        }
+
+        [HttpPatch("{id}/highlight")]
+        public async Task<IActionResult> ToggleHighlight(int id, [FromQuery] bool isHighlighted)
+        {
+            var player = await _playerRepository.GetPlayerByIdAsync(id);
+            if (player == null)
+            {
+                return NotFound("Jogador não encontrado.");
+            }
+
+            if (isHighlighted)
+            {
+                var playersWithSameRole = await _playerRepository.GetPlayersByRoleAsync(player.Role);
+
+                foreach (var p in playersWithSameRole.Where(p => p.Id != id))
+                {
+                    if (p.IsHighlighted)
+                    {
+                        p.IsHighlighted = false;
+                        await _playerRepository.UpdatePlayerAsync(p.Id, p);
+                    }
+                }
+            }
+
+            player.IsHighlighted = isHighlighted;
+            await _playerRepository.UpdatePlayerAsync(id, player);
+
+            return Ok(new { message = isHighlighted ? "Jogador destacado com sucesso!" : "Jogador não destacado." });
         }
     }
 }
