@@ -7,7 +7,7 @@ namespace E_SportsAPP.Repositories
         Task<IEnumerable<Player>> GetAllPlayersAsync();
         Task<IEnumerable<Player>> GetHighlightedPlayersByAsync();
         Task<Player?> GetPlayerByIdAsync(int id);
-        Task <List<Player>> GetPlayerByNameAsync(string name);
+        Task <List<Player>> GetPlayersByNameAsync(string name);
         Task <IEnumerable<Player>> GetPlayersByRoleAsync(string role);
         Task AddPlayerAsync(Player player);
         Task UpdatePlayerAsync(int id, Player player);

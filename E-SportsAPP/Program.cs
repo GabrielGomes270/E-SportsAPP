@@ -1,6 +1,7 @@
 using E_SportsAPP.Data;
 using E_SportsAPP.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Pomelo.EntityFrameworkCore.MySql.Internal;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +23,8 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddMySql<AppDbContext>(
     builder.Configuration.GetConnectionString("DefaultConnection"),
-    ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))
+    ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection")),
+    mysqlOptions => mysqlOptions.EnableStringComparisonTranslations()
 );
 
 builder.Services.AddScoped<IPlayerRepository, PlayerRepository>();

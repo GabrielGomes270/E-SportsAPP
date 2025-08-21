@@ -39,15 +39,15 @@ namespace E_SportsAPP.Controllers
         }
 
         [HttpGet("name/{name}")]
-        public async Task<ActionResult<PlayerResponseDTO>> GetPlayerByName(string name)
+        public async Task<ActionResult<IEnumerable<PlayerResponseDTO>>> GetPlayersByName(string name)
         {
-            var player = await _playerRepository.GetPlayerByNameAsync(name);
+            var player = await _playerRepository.GetPlayersByNameAsync(name);
             if (player == null)
             {
                 return NotFound();
             }
 
-             return Ok(_mapper.Map<PlayerResponseDTO>(player));
+             return Ok(_mapper.Map<IEnumerable<PlayerResponseDTO>>(player));
         }
 
 
