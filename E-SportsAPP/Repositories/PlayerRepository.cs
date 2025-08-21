@@ -18,7 +18,7 @@ namespace E_SportsAPP.Repositories
         {
             return await _context.Players.ToListAsync();
         }
-        public async Task<List<Player>> GetPlayerByNameAsync(string name)
+        public async Task<List<Player>> GetPlayersByNameAsync(string name)
         {
             return await _context.Players
             .Where(p => EF.Functions.Like(p.Name, $"%{name}%")).ToListAsync();
