@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using E_SportsAPP.DTOs.Gear;
 using E_SportsAPP.DTOs.Player;
+using E_SportsAPP.DTOs.Product;
 using E_SportsAPP.Models;
 
 namespace E_SportsAPP.AutoMapper
@@ -14,14 +15,18 @@ namespace E_SportsAPP.AutoMapper
             CreateMap<Player, PlayerResponseDTO>();
             CreateMap<Player, PlayerDetailDTO>();
 
-            CreateMap<Gear, GearResponseDTO>();
-            CreateMap<Gear, GearDetailDTO>();
-
             CreateMap<CreatePlayerDTO, Player>();
             CreateMap<UpdatePlayerDTO, Player>();
 
+            CreateMap<Gear, GearResponseDTO>();
+            CreateMap<Gear, GearDetailDTO>();
+
             CreateMap<CreateGearDTO, Gear>();
             CreateMap<UpdateGearDTO, Gear>();
+
+            CreateMap<Product, ProductResponseDTO>();
+            CreateMap<CreateProductDTO, Product>();
+            CreateMap<UpdateProductDTO, Product>();
 
         }
     }

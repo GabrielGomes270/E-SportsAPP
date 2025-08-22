@@ -13,6 +13,7 @@ namespace E_SportsAPP.Data
 
         public DbSet<Player> Players { get; set; }
         public DbSet<Gear> Gears { get; set; }
+        public DbSet<Product> Products { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
