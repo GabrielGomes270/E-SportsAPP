@@ -15,6 +15,7 @@ namespace E_SportsAPP.Data
         public DbSet<Gear> Gears { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<News> News { get; set; }
+        public DbSet<Newsletter> Newsletters { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

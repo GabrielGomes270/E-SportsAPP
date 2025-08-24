@@ -14,9 +14,9 @@ builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
     {
-        Title = "Minha API",
+        Title = "E-SportsApp",
         Version = "v1",
-        Description = "Descrição da minha API",
+        Description = "",
     });
 });
 
