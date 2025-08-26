@@ -1,6 +1,7 @@
 ﻿using E_SportsAPP.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Text.Json;
 
 namespace E_SportsAPP.Data
@@ -31,13 +32,21 @@ namespace E_SportsAPP.Data
                 c => c.ToList()                          
             );
 
+            var stringListConverter = new ValueConverter<List<string>, string>(
+                v => string.Join(";", v),
+                v => v.Split(";", StringSplitOptions.RemoveEmptyEntries).ToList()
+            );
+
 
             modelBuilder.Entity<Player>()
                         .Property(p => p.SocialLinks)
-                        .HasConversion(
-                        v => System.Text.Json.JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
-                        v => System.Text.Json.JsonSerializer.Deserialize<List<string>>(v, (JsonSerializerOptions)null)!
-                        )
+                        .HasConversion(stringListConverter)
+                        .Metadata.SetValueComparer(socialLinksComparer);
+
+
+            modelBuilder.Entity<Player>()
+                        .Property(p => p.Games)
+                        .HasConversion(stringListConverter)
                         .Metadata.SetValueComparer(socialLinksComparer);
         }
     }
