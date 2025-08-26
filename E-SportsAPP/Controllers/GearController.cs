@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using E_SportsAPP.DTOs.Gear;
+using E_SportsAPP.Models;
 using E_SportsAPP.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -35,6 +36,48 @@ namespace E_SportsAPP.Controllers
                 return NotFound();
             }
             return Ok(_mapper.Map<GearDetailDTO>(gear));
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<GearResponseDTO>> CreateGear(CreateGearDTO createGear)
+        {
+            if (createGear == null)
+            {
+                return BadRequest("Gear não pode ser nulo.");
+            }
+
+            var gear = _mapper.Map<Gear>(createGear);
+            await _gearRepository.AddGearAsync(gear);
+
+            var response = _mapper.Map<GearResponseDTO>(gear);
+            return CreatedAtAction(nameof(GetGearById), new { id = gear.Id }, response);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<GearResponseDTO>> UpdateGear(int id, [FromBody] CreateGearDTO updateGear)
+        {
+            var existingGear = await _gearRepository.GetGearByIdAsync(id);
+            if (existingGear == null)
+            {
+                return NotFound("Gear não encontrado.");
+            }
+
+            _mapper.Map(updateGear, existingGear);
+
+            await _gearRepository.UpdateGearAsync(existingGear);
+            return Ok(_mapper.Map<GearResponseDTO>(existingGear));
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteGear(int id)
+        {
+            var existingGear = await _gearRepository.GetGearByIdAsync(id);
+            if (existingGear == null)
+            {
+                return NotFound("Gear não encontrado.");
+            }
+            await _gearRepository.DeleteGearAsync(id);
+            return NoContent();
         }
 
         [HttpPost("{id}/image")]

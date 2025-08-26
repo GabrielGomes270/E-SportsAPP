@@ -72,7 +72,7 @@ namespace E_SportsAPP.Controllers
             var existingPlayer = await _playerRepository.GetPlayerByIdAsync(id);
             if (existingPlayer == null)
             {
-                return NotFound();
+                return NotFound("Player não encontrado.");
             }
 
             _mapper.Map(updatePlayer, existingPlayer);
