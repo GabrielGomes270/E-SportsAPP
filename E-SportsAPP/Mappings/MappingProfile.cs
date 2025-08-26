@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using E_SportsAPP.DTOs.Gear;
 using E_SportsAPP.DTOs.News;
+using E_SportsAPP.DTOs.Newsletter;
 using E_SportsAPP.DTOs.Player;
 using E_SportsAPP.DTOs.Product;
 using E_SportsAPP.Models;
@@ -31,6 +32,9 @@ namespace E_SportsAPP.AutoMapper
 
             CreateMap<News, NewsResponseDTO>();
             CreateMap<CreateNewsDTO, News>();
+
+            CreateMap<Newsletter, NewsletterResponseDTO>();
+            CreateMap<CreateNewsletterDTO, Newsletter>();
         }
     }
 }
