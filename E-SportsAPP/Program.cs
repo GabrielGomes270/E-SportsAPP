@@ -20,10 +20,21 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+var configuration = builder.Configuration;
+var baseConnectionString = configuration.GetConnectionString("DefaultConnection");
+var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
+
+if (string.IsNullOrEmpty(dbPassword))
+{
+    throw new InvalidOperationException("A variável de ambiente DB_PASSWORD não foi definida.");
+}
+
+var finalConnectionString = $"{baseConnectionString}Password={dbPassword};";
+
 
 builder.Services.AddMySql<AppDbContext>(
-    builder.Configuration.GetConnectionString("DefaultConnection"),
-    ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection")),
+    finalConnectionString,
+    ServerVersion.AutoDetect(finalConnectionString),
     mysqlOptions => mysqlOptions.EnableStringComparisonTranslations()
 );
 
