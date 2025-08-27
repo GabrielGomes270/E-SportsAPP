@@ -40,6 +40,10 @@ builder.Services.AddCors(options=>
     });
 });
 
+builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())
+                     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                     .AddEnvironmentVariables();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
