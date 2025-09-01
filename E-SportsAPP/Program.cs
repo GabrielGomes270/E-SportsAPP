@@ -22,6 +22,8 @@ builder.Services.AddSwaggerGen(options =>
 
 var configuration = builder.Configuration;
 var baseConnectionString = configuration.GetConnectionString("DefaultConnection");
+
+var dbHost = Environment.GetEnvironmentVariable("DB_HOST") ?? "localhost";
 var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
 
 if (string.IsNullOrEmpty(dbPassword))
@@ -29,7 +31,9 @@ if (string.IsNullOrEmpty(dbPassword))
     throw new InvalidOperationException("A variável de ambiente DB_PASSWORD não foi definida.");
 }
 
-var finalConnectionString = $"{baseConnectionString}Password={dbPassword};";
+var finalConnectionString = baseConnectionString?
+    .Replace("Server=localhost", $"Server={dbHost}")
+    + $"Password={dbPassword};";
 
 
 builder.Services.AddMySql<AppDbContext>(

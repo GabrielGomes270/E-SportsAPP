@@ -1,0 +1,45 @@
+version: '3.9'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: esports_api
+    ports:
+      - "5000:8080"   # API acessível em http://localhost:5000
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DB_PASSWORD=${DB_PASSWORD}
+    depends_on:
+      - db
+    networks:
+      - esports-network
+    env_file:
+      - .env
+
+  db:
+    image: mysql:8.0
+    container_name: esports_db
+    restart: always
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "3305:3305"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - esports-network
+    env_file:
+      - .env
+
+networks:
+  esports-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+
